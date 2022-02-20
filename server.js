@@ -22,13 +22,18 @@ app.get('/notes', (req, res) => {
 });
 
 //route to get notes
-app.get('/api/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '/db/db.json'));
-});
+// app.get('/api/notes', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/db/db.json'));
+// });
 
 app.get('/api/notes', (req, res) => {
-    fs.readFile('/db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)))
-})
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+      if(err) {
+        console.log(err)
+      }
+      res.json(JSON.parse(data))
+    })
+});
 
 
 //routes to post notes
@@ -39,7 +44,7 @@ app.post('/api/notes', (req, res) =>{
     const newDb = {
       title, 
       text, 
-      noteId: uuidv4(),
+      id: uuidv4(),
     };
 
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -76,9 +81,10 @@ app.post('/api/notes', (req, res) =>{
 })
 
 
-//route to delete files
+
+//route to delete files - deleted from db.json but not deleted from webpage
 app.delete('/api/notes/:id', (req,res) => {
-  const noteId = req.params.noteId //this is giving undefined --- why??
+  const noteId = req.params.id
   console.log(noteId)
 
   fs.readFile('./db/db.json', 'utf8', (err, notes) => {
@@ -87,7 +93,7 @@ app.delete('/api/notes/:id', (req,res) => {
       } 
       notes = JSON.parse(notes)
 
-      notes = notes.filter(note => note.noteId !== noteId);
+      notes = notes.filter(note => note.id !== noteId);
 
       fs.writeFile(
         './db/db.json',
@@ -98,7 +104,7 @@ app.delete('/api/notes/:id', (req,res) => {
             : console.info('Successfully updated notes!')
       );
   
- 
+        res.json(notes)
   });
 });
 
