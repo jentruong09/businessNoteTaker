@@ -35,12 +35,12 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) =>{
     //fs.readFile('/db/db.json', 'utf8').then((notes) => JSON.parse(notes))
     const { title , text } = req.body;
-
+  if (title && text) {
     const newDb = {
-      title: title, 
-      text: text, 
+      title, 
+      text, 
       noteId: uuidv4(),
-    }
+    };
 
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {
@@ -52,10 +52,10 @@ app.post('/api/notes', (req, res) =>{
           // Add a new review
           parsedDb.push(newDb);
   
-          // Write updated reviews back to the file
+          // Write updated notes back to the file
           fs.writeFile(
             './db/db.json',
-            JSON.stringify(parsedDb, null, 4),
+            JSON.stringify(parsedDb, null, 3),
             (writeErr) =>
               writeErr
                 ? console.error(writeErr)
@@ -70,33 +70,37 @@ app.post('/api/notes', (req, res) =>{
     };
       console.log(response);
       res.status(201).json(response);
-
+  } else {
+    res.status(500).json('Error in posting note');
+  }
 })
 
 
-// //route to delete files
-// app.delete('/api/notes/:id', (req,res) => {
-//   const noteId = req.params.noteId
-//   console.log(noteId)
+//route to delete files
+app.delete('/api/notes/:id', (req,res) => {
+  const noteId = req.params.noteId //this is giving undefined --- why??
+  console.log(noteId)
 
-//   fs.readFile('./db/db.json', 'utf8', (err, notes) => {
-//       if(err) {
-//           console.log(err)
-//       } 
-//       notes = JSON.parse(notes)
+  fs.readFile('./db/db.json', 'utf8', (err, notes) => {
+      if(err) {
+          console.log(err)
+      } 
+      notes = JSON.parse(notes)
 
-//       notes = notes.filter((notes) => notes.noteId !== noteId);
+      notes = notes.filter(note => note.noteId !== noteId);
 
-//       fs.writeFile('./db/db.json', JSON.stringify(notes), (err, notes) => {
-//           if(err) {
-//               console.log(err);
-//           }
-//           res.json(notes)
-//       })
+      fs.writeFile(
+        './db/db.json',
+        JSON.stringify(notes, null, 3),
+        (writeErr) =>
+          writeErr
+            ? console.error(writeErr)
+            : console.info('Successfully updated notes!')
+      );
   
  
-//   });
-// });
+  });
+});
 
 
 //route to all other pages - catch all
