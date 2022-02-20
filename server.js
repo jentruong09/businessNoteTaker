@@ -21,10 +21,6 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-//route to get notes
-// app.get('/api/notes', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/db/db.json'));
-// });
 
 app.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -82,7 +78,7 @@ app.post('/api/notes', (req, res) =>{
 
 
 
-//route to delete files - deleted from db.json but not deleted from webpage
+//route to delete files 
 app.delete('/api/notes/:id', (req,res) => {
   const noteId = req.params.id
   console.log(noteId)
