@@ -35,6 +35,7 @@ After clicking on deployed link, this is what you will see:
 
 <br>
 When you click on the Get Started Button then you will see this page:
+
 ![Note Taker Note Page](public/assets/images/noteTakerNote.png)
 
 <br/>
@@ -46,7 +47,7 @@ This project is made possible by:
 
 All starting code was provided by: Trilogy Education Services, LLC, a 2U, Inc. brand.
 
-[Heroku - Deploying the webpage](https://trailhead.salesforce.com/en/content/learn/trails/heroku_enterprise)
+[Heroku](https://trailhead.salesforce.com/en/content/learn/trails/heroku_enterprise)
 
 [npm uuid](https://www.npmjs.com/package/uuid)
 
