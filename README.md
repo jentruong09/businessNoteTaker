@@ -47,6 +47,11 @@ This project is made possible by:
 All starting code was provided by: Trilogy Education Services, LLC, a 2U, Inc. brand.
 
 [Heroku - Deploying the webpage](https://trailhead.salesforce.com/en/content/learn/trails/heroku_enterprise)
+
+[npm uuid](https://www.npmjs.com/package/uuid)
+
+[npm express](https://www.npmjs.com/package/express)
+
 <br/>
 
 ## License 
